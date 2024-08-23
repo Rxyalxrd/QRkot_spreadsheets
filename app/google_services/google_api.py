@@ -22,7 +22,7 @@ async def spreadsheets_create(
     spreadsheets_body['properties']['title'] += now_date_time
 
     response = await wrapper_services.as_service_account(
-        service.spreadsheets.create(json=SPREADSHEET_BODY)
+        service.spreadsheets.create(json=spreadsheets_body)
     )
 
     return response['spreadsheetId']
@@ -43,13 +43,13 @@ async def set_user_permissions(
         service.permissions.create(
             fileId=spreadsheet_id,
             json=permissions_body,
-            fields="id"
+            fields='id'
         ))
 
 
 async def spreadsheets_update_value(
         spreadsheet_id: str,
-        charity_projects: list[CharityProject],
+        charity_projects: tuple[CharityProject],
         wrapper_services: Aiogoogle
 ) -> None:
     """Обновление данных."""
@@ -61,17 +61,15 @@ async def spreadsheets_update_value(
     )
     service = await wrapper_services.discover('sheets', 'v4')
 
-    table_values = deepcopy(TABLE_VALUES_DRAFT)
-    table_values[0].append(now_date_time)
+    table_values = [row for row in TABLE_VALUES_DRAFT]
+    table_values[0] = table_values[0] + (now_date_time,)
 
     for project in charity_projects:
-        table_values.append(
-            [
-                str(project['name']),
-                str(project[difference_in_days]),
-                str(project['description'])
-            ]
-        )
+        table_values.append((
+            str(project['name']),
+            str(difference_in_days),
+            str(project['description'])
+        ))
 
     update_body = {
         'majorDimension': 'ROWS',

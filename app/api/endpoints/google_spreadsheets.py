@@ -18,7 +18,7 @@ router = APIRouter()
 
 @router.post(
     '/',
-    dependencies=[Depends(current_superuser)]
+    dependencies=(Depends(current_superuser),)
 )
 async def get_spreadsheet(
     session: AsyncSession = Depends(get_async_session),

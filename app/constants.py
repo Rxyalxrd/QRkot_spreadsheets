@@ -1,6 +1,6 @@
 from app.core.config import settings
 
-FORMAT = "%Y/%m/%d %H:%M:%S"
+FORMAT = '%Y/%m/%d %H:%M:%S'
 SPREADSHEET_ROWCOUNT_DRAFT = 100
 SPREADSHEET_COLUMN_COUNT_DRAFT = 11
 MAX_LENGTH_FOR_NAME = 100
@@ -11,10 +11,10 @@ PASSWORD_MIN_LENGTH = 3
 GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/'
 
 
-SCOPES = [
+SCOPES = (
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive',
-]
+)
 
 INFO = {
     'type': settings.type,
@@ -45,8 +45,8 @@ SPREADSHEET_BODY = dict(
     ))]
 )
 
-TABLE_VALUES_DRAFT = [
-    ['Отчет от', ],
-    ['Топ проектов по скорости закрытия'],
-    ['Название проекта', 'Время сбора', 'Описание']
-]
+TABLE_VALUES_DRAFT = (
+    ('Отчет от', ),
+    ('Топ проектов по скорости закрытия', ),
+    ('Название проекта', 'Время сбора', 'Описание')
+)
